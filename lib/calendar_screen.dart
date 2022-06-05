@@ -62,21 +62,27 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 style: textTheme.subtitle1!.copyWith(color: Colors.white),
               ),
             ),
-            CustomCalendar(),
+            CustomCalendar(onSelectedDay: (day) {
+              _selectedEvent.value = event[day] ?? [];
+            }),
             Expanded(
               child: ValueListenableBuilder(
                 valueListenable: _selectedEvent,
                 builder: (context, dynamic value, _) {
                   return value.isEmpty
-                      ? Container()
+                      ? Container(
+                          child: Text('NO DATA'),
+                        )
                       : ListView.builder(
-                          itemCount: value.length,
                           itemBuilder: (context, index) {
-                            return ListTile(
-                              title: Text(value[index].title),
-                              subtitle: Text(value[index].description),
+                            return Container(
+                              child: ListTile(
+                                title: Text(value[index].title),
+                                subtitle: Text(value[index].description),
+                              ),
                             );
                           },
+                          itemCount: value.length,
                         );
                 },
               ),

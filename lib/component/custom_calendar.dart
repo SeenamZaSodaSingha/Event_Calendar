@@ -4,7 +4,8 @@ import 'package:event_calendar/constants.dart';
 import 'package:event_calendar/model/event.dart';
 
 class CustomCalendar extends StatefulWidget {
-  CustomCalendar({Key? key}) : super(key: key);
+  final Function(DateTime day)? onSelectedDay;
+  const CustomCalendar({Key? key, this.onSelectedDay}) : super(key: key);
 
   @override
   State<CustomCalendar> createState() => _CustomCalendarState();
@@ -24,6 +25,7 @@ class _CustomCalendarState extends State<CustomCalendar> {
         _focusedDay = focusDay;
       }
     });
+    widget.onSelectedDay!(focusDay);
   }
 
   @override
